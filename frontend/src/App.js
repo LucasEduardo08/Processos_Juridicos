@@ -44,7 +44,10 @@ const Layout = () => (
   <>
     <Sidebar />
     <Outlet />
+    <Sidebar />
+    <Outlet />
   </>
+);
 );
 
 const App = () => {
@@ -82,5 +85,8 @@ const App = () => {
     </Router>
   );
 };
+  );
+};
 
+export default App;
 export default App;
