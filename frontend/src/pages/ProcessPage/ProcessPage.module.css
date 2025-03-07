@@ -78,7 +78,7 @@
   overflow-x: auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   html{
     font-size: 12px;
   }

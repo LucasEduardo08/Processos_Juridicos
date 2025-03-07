@@ -55,3 +55,10 @@
   flex-direction: row;
   margin-top: 1rem;
 }
+
+@media (max-width: 768px){
+  .main_container{
+    width: 80%;
+    height: 50%;
+  }
+}

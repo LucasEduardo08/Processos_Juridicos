@@ -9,6 +9,7 @@ import AuthContext from "../context/AuthContext";
 import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Box, capitalize, Menu, MenuItem, Typography } from "@mui/material"; // Importe Menu e MenuItem
+import MenuIcon from "@mui/icons-material/Menu";
 
 function Sidebar() {
   const { user } = useContext(AuthContext);
@@ -71,6 +72,7 @@ function Sidebar() {
             padding: "10px",
             backgroundColor: "#17427c",
             borderRadius: "15%",
+            md: { display: "none" },
           }}>
           <IconButton
             sx={{ position: "relative", margin: "auto" }}
@@ -122,9 +124,9 @@ function Sidebar() {
 
         <li className={styles.li_content}>
           <Link to="/calendar-page">
-            <button className={styles.button_li}>
-              <FaRegCalendarAlt className={styles.icon_li} />
-              Calendário
+            <button className={`${styles.button_li} ${page === "calendar-page" ? styles.active : ""}`}>
+              <FaRegCalendarAlt className={`${styles.icon_li} $`} />
+              <span>Calendário</span>
             </button>
           </Link>
         </li>
@@ -132,7 +134,7 @@ function Sidebar() {
           <Link to="/process">
             <button className={`${styles.button_li} ${page === "process" || page === "process-edit" ? styles.active : ""}`}>
               <FaRegNewspaper className={styles.icon_li} />
-              Processos
+              <span>Processos</span>
             </button>
           </Link>
         </li>
@@ -140,7 +142,7 @@ function Sidebar() {
           <Link to="/user">
             <button className={styles.button_li}>
               <FaPeopleGroup className={styles.icon_li} />
-              Gerenciar
+              <span>Gerenciar</span>
             </button>
           </Link>
         </li>

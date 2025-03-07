@@ -1,75 +1,89 @@
-.sidebar {
-  width: 15vw;
-  height: 100vh;
-  color: white;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar_logo img {
-  width: 150px;
-  margin-bottom: 20px;
-}
-
-.logo_uea_container {
-  width: 150px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px;
-}
-
-.li_content {
-  display: flex;
-  flex-direction: column;
-}
-
-.button_li {
-  display: flex;
-  flex-direction: row;
-  width: 150px;
-  height: 2.5rem;
-  align-items: center;
-  gap: 8px;
-  background-color: #17427c;
-  color: white;
-}
-
-.button_li.active {
-  color: #0092C1;
-}
-
-.icon_li {
-  font-size: 18px;
-}
-
-.sidebar_ul {
-  margin-top: 10px;
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  margin: 20px 0;
-  cursor: pointer;
-  gap: 20px;
-}
-
-.box_option {
-  background-color: rgb(17, 19, 105);
-  height: 20px;
-  width: 110px;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-
-@media (max-width: 768px){
-  .sidebar{
-    display: none;
+  .sidebar {
+    width: 15vw;
+    height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
   }
-}
+
+  .sidebar_logo img {
+    width: 150px;
+    margin-bottom: 20px;
+  }
+
+  .logo_uea_container {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+  }
+
+  .li_content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .button_li {
+    display: flex;
+    flex-direction: row;
+    width: 150px;
+    height: 2.5rem;
+    align-items: center;
+    gap: 8px;
+    background-color: #17427c;
+    color: white;
+  }
+
+  .button_li.active {
+    color: #0092C1;
+  }
+
+  .icon_li {
+    font-size: 18px;
+  }
+
+  .sidebar_ul {
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .sidebar li {
+    margin: 20px 0;
+    cursor: pointer;
+    gap: 20px;
+  }
+
+  .box_option {
+    background-color: rgb(17, 19, 105);
+    height: 20px;
+    width: 110px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+
+  @media (max-width: 865px){
+    .sidebar{
+      width: 15vw;
+      height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      
+    }
+    .icon_li{
+      font-size: 100%;
+    }
+    .button_li{
+      width: 10vw;
+    }
+    .button_li span{
+      display: none;
+    }
+
+  }

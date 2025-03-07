@@ -84,14 +84,14 @@ const getNotifications = async (req, res) => {
 const getProcessesInTransfer = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log("idgetprocesses in transfer", id);
+    // console.log("idgetprocesses in transfer", id);
     const procurador = await prisma.procuradores.findFirst({
       where: {
         Pcrd_Usuario_id: parseInt(id),
       },
     });
 
-    console.log("procurador getprocessesintrnasfer", procurador);
+    // console.log("procurador getprocessesintrnasfer", procurador);
     const processes = await prisma.transferencias.findMany({
       where: {
         Tran_UsuarioOrigem_id: parseInt(id),
@@ -105,13 +105,42 @@ const getProcessesInTransfer = async (req, res) => {
         // usuarioOrigem: true,
       },
     });
-    console.log(processes);
-    console.dir(processes, { depth: null });
+
     res.status(200).json(processes);
-    console.log(1);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Erro ao buscar os processos em transferência" });
+  }
+};
+
+const acceptTransfer = async (req, res) => {
+  const { id } = req.params;
+  console.log("id", id);
+  try {
+    const transfer = await prisma.transferencias.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: {
+        Tran_Status: "Aceito",
+      },
+      include: {
+        processos: true,
+      },
+    });
+
+    console.log(transfer);
+
+    const processesUpdated = await prisma.processos.updateMany({
+      where: {
+        id: { in: transfer.processos.map((process) => process.id) },
+      },
+      data: { Pcss_Procurador_id: transfer.Tran_ProcuradorDestino_id },
+    });
+    res.status(200).json(transfer);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Erro ao aceitar a transferência" });
   }
 };
 
@@ -120,4 +149,5 @@ module.exports = {
   transferencia,
   getNotifications,
   getProcessesInTransfer,
+  acceptTransfer,
 };

@@ -23,7 +23,7 @@ const ProcessTable = ({ processes, calculatePrazo, handleSelectedProcessesChange
   };
 
   console.log("processtransfer table", processesInTransfer);
-  console.log("??", processesInTransfer.processos);
+  console.log("??", processesInTransfer?.processos);
   useEffect(() => {
     handleSelectedProcessesChange(selectedProcesses);
   }, [selectedProcesses, handleSelectedProcessesChange]);
@@ -34,6 +34,7 @@ const ProcessTable = ({ processes, calculatePrazo, handleSelectedProcessesChange
       <Table stickyHeader>
         <TableHead>
           <TableRow>
+            <TableCell sx={{ backgroundColor: "white" }}></TableCell>
             <TableCell sx={{ backgroundColor: "white" }}>Status</TableCell>
             <TableCell sx={{ backgroundColor: "white" }}>Nº do Processo</TableCell>
             <TableCell sx={{ backgroundColor: "white" }}>Nº do Siged</TableCell>
@@ -54,7 +55,6 @@ const ProcessTable = ({ processes, calculatePrazo, handleSelectedProcessesChange
                 backgroundColor: processesInTransfer.some((transfer) => transfer.processos.some((p) => p.id === process.id))
                   ? "#F3E9C780"
                   : "inherit",
-                
               }}>
               <TableCell>
                 <Checkbox checked={selectedProcesses.includes(process.id)} onChange={() => handleSelectProcess(process.id)} />

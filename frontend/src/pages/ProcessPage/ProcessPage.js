@@ -6,12 +6,14 @@ import { getAllProcess, getProcessesByAttorney, updateProcess } from "../../serv
 import { IoAddOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import { Button, IconButton, Menu, MenuItem, Badge, Typography } from "@mui/material";
+import { Button, IconButton, Menu, MenuItem, Badge, Typography, Stack } from "@mui/material";
 import ModalExchangeProcesses from "./ModalExchangeProcesses";
 import { getAttorneys } from "../../services/usersService";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { getProcessesInTransfer, getTransferNotifications } from "../../services/transferService";
+import { acceptTransfer, getProcessesInTransfer, getTransferNotifications } from "../../services/transferService";
 import { formatDateBR } from "../../utils/utils";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const ProcessPage = () => {
   const [processes, setProcesses] = useState([]);
@@ -98,7 +100,7 @@ const ProcessPage = () => {
     fetchProcessesInTransfer();
   }, []);
 
-  console.log("processos em transferencia", processesInTransfer)
+  console.log("processos em transferencia", processesInTransfer);
   console.log("notifications", notifications);
   const updateStatus = async (id, status) => {
     try {
@@ -132,6 +134,22 @@ const ProcessPage = () => {
     return diffDays;
   };
 
+  const handleAcceptTransfer = async (notificationId) => {
+    
+    try {
+      const response = await acceptTransfer(notificationId)
+      console.log(response);
+      // fetchProcesses();
+    } catch (error) {
+      console.log(error);
+      
+    }
+  };
+
+  const handleRejectTransfer = async (notificationId) => {
+    return;
+  };
+
   return (
     <div className={styles.page_content}>
       <div className={styles.main_container}>
@@ -146,11 +164,23 @@ const ProcessPage = () => {
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose} sx={{ width: "100vw" }}>
           {notifications?.length > 0 ? (
             notifications.map((notification) => (
-              <MenuItem key={notification.id} onClick={handleMenuClose}>
+              <MenuItem
+                key={notification.id}
+                // onClick={handleMenuClose}
+                sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
                 <Typography>
                   O(a) Procurador {notification.usuarioOrigem.Usua_Nome} solicitou a troca de {notification.processos?.length}{" "}
                   processos no dia {formatDateBR(notification.Tran_Data)}
                 </Typography>
+                {/* Botões de Aceitar e Recusar em Linha */}
+                <Stack direction="row" spacing={1} sx={{ marginTop: "0.5rem", marginLeft: "auto" }}>
+                  <IconButton color="success" onClick={() => handleAcceptTransfer(notification.id)}>
+                    <CheckCircleIcon />
+                  </IconButton>
+                  <IconButton color="error" onClick={() => handleRejectTransfer(notification.id)}>
+                    <CancelIcon />
+                  </IconButton>
+                </Stack>
               </MenuItem>
             ))
           ) : (

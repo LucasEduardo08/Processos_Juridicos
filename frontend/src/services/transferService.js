@@ -27,3 +27,12 @@ export const getProcessesInTransfer = async (id) => {
     console.log(error);
   }
 };
+
+export const acceptTransfer = async (id) => {
+  try {
+    const response = await api.post(`/transfers/accept/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
