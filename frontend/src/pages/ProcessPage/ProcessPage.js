@@ -6,7 +6,7 @@ import { deleteProcess, getAllProcess, getProcessesByAttorney, updateProcess } f
 import { IoAddOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import { Button, IconButton, Menu, MenuItem, Badge, Typography, Stack } from "@mui/material";
+import { Button, IconButton, Menu, MenuItem, Badge, Typography, Stack, Container, Box } from "@mui/material";
 import ModalExchangeProcesses from "./ModalExchangeProcesses";
 import { getAttorneys } from "../../services/usersService";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -15,6 +15,8 @@ import { formatDateBR } from "../../utils/utils";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Swal from "sweetalert2";
+import ContainerComponent from "../../components/Container";
+import HeaderPage from "../../components/HeaderPage";
 
 const ProcessPage = () => {
   const renderCount = useRef(0);
@@ -202,8 +204,9 @@ const ProcessPage = () => {
   );
 
   return (
-    <div className={styles.page_content}>
-      <div className={styles.main_container}>
+    // <div className={styles.page_content}>
+    <>
+      <HeaderPage>
         <IconButton color="inherit" onClick={handleMenuOpen} sx={{ marginLeft: "auto" }}>
           <Badge badgeContent={notifications?.length} color="error">
             <NotificationsIcon fontSize="large" />
@@ -216,15 +219,15 @@ const ProcessPage = () => {
 
         <div className={styles.filter_section_bar}>
           <label>Selecionar Status: </label>
-          <button onClick={() => setStatusButton(prev => prev === "Emitidos" ? "" : "Emitidos")}>
+          <button onClick={() => setStatusButton((prev) => (prev === "Emitidos" ? "" : "Emitidos"))}>
             <FaCircle color="#2871A7" />
             Emitidos
           </button>
-          <button onClick={() => setStatusButton(prev => prev === "Concluídos" ? "" : "Concluídos")}>
+          <button onClick={() => setStatusButton((prev) => (prev === "Concluídos" ? "" : "Concluídos"))}>
             <FaCircle color="#19D109" />
             Concluídos
           </button>
-          <button onClick={() => setStatusButton(prev => prev === "Vencidos" ? "" : "Vencidos")}>
+          <button onClick={() => setStatusButton((prev) => (prev === "Vencidos" ? "" : "Vencidos"))}>
             <FaCircle color="#FF0000" />
             Vencidos
           </button>
@@ -234,23 +237,23 @@ const ProcessPage = () => {
           </div>
           <FaFilter className={styles.icon_filter} />
         </div>
-
-        <div className={styles.content}>
-          <div className={styles.title_container}>
-            <h3>Listagem de processos cadastrados</h3>
-            <IoAddOutline className={styles.add_icon} onClick={() => navigate("/register-process")} />
-          </div>
-
-          <ProcessTable
-            processes={filteredProcesses}
-            calculatePrazo={calculatePrazo}
-            handleSelectedProcessesChange={handleSelectedProcessesChange}
-            processesInTransfer={processesInTransfer}
-            handleDeleteProcess={handleDeleteProcess}
-            handleConcludeProcess={handleConcludeClick}
-          />
+      </HeaderPage>
+      <ContainerComponent>
+        <div className={styles.title_container}>
+          <h3>Listagem de processos cadastrados</h3>
+          <IoAddOutline className={styles.add_icon} onClick={() => navigate("/register-process")} />
         </div>
 
+        <ProcessTable
+          processes={filteredProcesses}
+          calculatePrazo={calculatePrazo}
+          handleSelectedProcessesChange={handleSelectedProcessesChange}
+          processesInTransfer={processesInTransfer}
+          handleDeleteProcess={handleDeleteProcess}
+          handleConcludeProcess={handleConcludeClick}
+        />
+      </ContainerComponent>
+      <Box sx={{ display: "flex" }}>
         <Button
           onClick={handleOpenModal}
           variant="contained"
@@ -258,8 +261,7 @@ const ProcessPage = () => {
           disabled={selectedProcesses.length === 0}>
           Trocar Processos
         </Button>
-      </div>
-
+      </Box>
       <ModalExchangeProcesses
         open={modalOpen}
         onClose={handleCLoseModal}
@@ -267,7 +269,7 @@ const ProcessPage = () => {
         attorneys={attorneys}
         processes={selectedProcesses}
       />
-    </div>
+    </>
   );
 };
 

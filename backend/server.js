@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: ["http://localhost:3000/", "http://192.168.1.4:3000/", "http://localhost:3060/", "http://backend:3060"], // Permitir apenas o frontend local
+  origin: ["*"], // Permitir apenas o frontend local
   methods: "GET,POST,PUT,DELETE",
   credentials: true, // Permite que cookies e credenciais sejam compartilhados
 };
@@ -41,7 +41,6 @@ app.use("/api/documents", documentRouter);
 app.use("/api/", authRouter);
 app.use("/api/", reportRouter);
 const path = require("path");
-const { report } = require("process");
 
 // Servir arquivos estáticos da pasta 'uploads'
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

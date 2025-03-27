@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./RegisterForm.module.css";
 import { postProcess } from "../../services/processService";
 import { useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function Form() {
   const [formData, setFormData] = useState(() => {
@@ -78,7 +80,8 @@ function Form() {
         Pjud_DataAudiencia: formData.Pjud_DataAudiencia,
       });
 
-      if (response.data) {
+      console.log("response", response);
+      if (response) {
         alert("Processo cadastrado com sucesso!");
         setFormData({
           Pcss_NumeroProcesso: "",
@@ -115,11 +118,13 @@ function Form() {
         {/* Informações básicas */}
 
         <section>
-          <select onChange={handleChange} value={formData.tipo} name="tipo">
-            <option value="">Tipo de processo</option>
-            <option value="pjud">Processo Judicial</option>
-            <option value="pnjud">Processo não Judicial</option>
-          </select>
+          <div className={styles.form_group}>
+            <select onChange={handleChange} value={formData.tipo} name="tipo">
+              <option value="">Tipo de processo</option>
+              <option value="pjud">Processo Judicial</option>
+              <option value="pnjud">Processo não Judicial</option>
+            </select>
+          </div>
 
           <h3>Informações básicas:</h3>
           <div className={styles.form_row}>
@@ -249,12 +254,13 @@ function Form() {
           <div className={styles.form_row}>
             <div className={styles.form_group}>
               <label>Data de Emissão</label>
-              <input
-                type="date"
-                placeholder="Data de emissão"
-                name="Pcss_DataEmitido"
-                value={formData.Pcss_DataEmitido}
-                onChange={handleChange}
+              <DatePicker
+                selected={formData.Pcss_DataEmitido}
+                onChange={(date) => setFormData({ ...formData, Pcss_DataEmitido: date })}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="Selecione a data"
+                className={styles.date_input}
+                locale="pt-BR" // Configura para português
               />
             </div>
             <div className={styles.form_group}>
@@ -275,7 +281,7 @@ function Form() {
                 type="date"
                 placeholder="Data de intimação"
                 name="Pjud_DataIntimacao"
-                value={formData.Pjud_DataIntimacao}
+                value={formData.tipo === "pnjud" ? "" : formData.Pjud_DataIntimacao}
                 onChange={handleChange}
                 disabled={!(formData.tipo === "pjud")}
               />
@@ -287,7 +293,7 @@ function Form() {
                 type="date"
                 placeholder="Data da audiência"
                 name="Pjud_DataAudiencia"
-                value={formData.Pjud_DataAudiencia}
+                value={formData.tipo === "pnjud" ? "" : formData.Pjud_DataAudiencia}
                 onChange={handleChange}
                 disabled={!(formData.tipo === "pjud")}
               />
@@ -347,9 +353,7 @@ function Form() {
 
         {/* Botões */}
         <div className={styles.form_buttons}>
-          <button onClick={() => navigate("/process")}>
-            Voltar
-          </button>
+          <button type="button" onClick={() => navigate("/process")}>Voltar</button>
           <button
             type="reset"
             onClick={() =>

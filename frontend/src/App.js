@@ -25,10 +25,12 @@ const Layout = () => {
   const isUserPage = location.pathname.startsWith("/user");
 
   return (
-    <>
+    <div className="layout">
       {isUserPage ? <SidebarGerenciar /> : <Sidebar />}
-      <Outlet />
-    </>
+      <main className="main-content">
+        <Outlet />
+      </main>
+    </div>
   );
 };
 

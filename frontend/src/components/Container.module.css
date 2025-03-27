@@ -1,0 +1,15 @@
+/* .content h3 {
+  margin: 10px;
+} */
+
+.container {
+  /* margin: 10px 30px 60px 100px;   */
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+  overflow-x: auto;
+  max-height: 550px;
+}
+

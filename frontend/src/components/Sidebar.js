@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Box, capitalize, Menu, MenuItem, Typography } from "@mui/material"; // Importe Menu e MenuItem
 import MenuIcon from "@mui/icons-material/Menu";
+import AssessmentIcon from "@mui/icons-material/Assessment";
 
 function Sidebar() {
   const { user } = useContext(AuthContext);
@@ -17,6 +18,14 @@ function Sidebar() {
   const { logoutContext } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+  console.log(isOpen);
+
+  // Novo toggle para mobile
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
   let page = "";
   switch (true) {
@@ -34,6 +43,9 @@ function Sidebar() {
       break;
     case location.pathname === "/calendar-page":
       page = "calendar-page";
+      break;
+    case location.pathname === "/reports":
+      page = "reports";
       break;
     default:
       break;
@@ -56,98 +68,114 @@ function Sidebar() {
   };
 
   return (
-    <div className={styles.sidebar}>
-      <div className={styles.sidebar_logo}>
-        <div className={styles.logo_uea_container}>
-          <img src={logo_uea} alt="Logo da UEA" className={styles.logo_uea} />
-        </div>
+    <>
+      <div className={styles.menu_icon} onClick={toggleSidebar}>
+        <MenuIcon />
       </div>
-      <ul className={styles.sidebar_ul}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "start",
-            width: "150px",
-            padding: "10px",
-            backgroundColor: "#17427c",
-            borderRadius: "15%",
-            md: { display: "none" },
-          }}>
-          <IconButton
-            sx={{ position: "relative", margin: "auto" }}
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            color="inherit"
-            onMouseEnter={handleMenuOpen} // Abre o menu ao passar o mouse
-          >
-            <AccountCircle />
-          </IconButton>
-
-          {/* Menu de Logout */}
-          <Menu
-            id="logout-menu"
-            anchorEl={anchorEl}
-            open={menuOpen}
-            onClose={handleMenuClose}
-            MenuListProps={{
-              onMouseEnter: () => setMenuOpen(true), // Mantém aberto se o mouse estiver dentro
-              onMouseLeave: handleMenuClose, // Fecha quando o mouse sair
-            }}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "center",
+      <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
+        <div className={styles.sidebar_logo}>
+          <div className={styles.logo_uea_container}>
+            <img src={logo_uea} alt="Logo da UEA" className={styles.logo_uea} />
+          </div>
+        </div>
+        <ul className={styles.sidebar_ul}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+              width: "150px",
+              padding: "10px",
+              backgroundColor: "#17427c",
+              borderRadius: "15%",
+              md: { display: "none" },
             }}>
-            <MenuItem onClick={logoutUser}>Logout</MenuItem>
-          </Menu>
+            <IconButton
+              sx={{ position: "relative", margin: "auto" }}
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              color="inherit"
+              onMouseEnter={handleMenuOpen} // Abre o menu ao passar o mouse
+            >
+              <AccountCircle />
+            </IconButton>
 
-          <Typography variant="subtitle2">Logado como {user && capitalize(user?.user.name)}</Typography>
-          <br />
-          {user?.user.role.trim() === "ProcuradorEfetivo" ? (
-            <Typography variant="subtitle2" fontWeight="bold" color="white">
-              Procurador Efetivo
-            </Typography>
-          ) : user?.user.role.trim() === "ProcuradorGeral" ? (
-            <Typography variant="subtitle2">Procurador Geral</Typography>
-          ) : user?.user.role.trim() === "Secretária" ? (
-            <Typography variant="subtitle2">Secretária</Typography>
-          ) : (
-            <Typography variant="subtitle2">Assessora</Typography>
-          )}
-        </Box>
+            {/* Menu de Logout */}
+            <Menu
+              id="logout-menu"
+              anchorEl={anchorEl}
+              open={menuOpen}
+              onClose={handleMenuClose}
+              MenuListProps={{
+                onMouseEnter: () => setMenuOpen(true), // Mantém aberto se o mouse estiver dentro
+                onMouseLeave: handleMenuClose, // Fecha quando o mouse sair
+              }}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}>
+              <MenuItem onClick={logoutUser}>Logout</MenuItem>
+            </Menu>
 
-        <li className={styles.li_content}>
-          <Link to="/calendar-page">
-            <button className={`${styles.button_li} ${page === "calendar-page" ? styles.active : ""}`}>
-              <FaRegCalendarAlt className={`${styles.icon_li} $`} />
-              <span>Calendário</span>
-            </button>
-          </Link>
-        </li>
-        <li>
-          <Link to="/process">
-            <button className={`${styles.button_li} ${page === "process" || page === "process-edit" ? styles.active : ""}`}>
-              <FaRegNewspaper className={styles.icon_li} />
-              <span>Processos</span>
-            </button>
-          </Link>
-        </li>
-        <li>
-          <Link to="/user">
-            <button className={styles.button_li}>
-              <FaPeopleGroup className={styles.icon_li} />
-              <span>Gerenciar</span>
-            </button>
-          </Link>
-        </li>
-      </ul>
-    </div>
+            <Typography variant="subtitle2">Logado como {user && capitalize(user?.user.name)}</Typography>
+            <br />
+            {user?.user.role.trim() === "ProcuradorEfetivo" ? (
+              <Typography variant="subtitle2" fontWeight="bold" color="white">
+                Procurador Efetivo
+              </Typography>
+            ) : user?.user.role.trim() === "ProcuradorGeral" ? (
+              <Typography variant="subtitle2">Procurador Geral</Typography>
+            ) : user?.user.role.trim() === "Secretária" ? (
+              <Typography variant="subtitle2">Secretária</Typography>
+            ) : (
+              <Typography variant="subtitle2">Assessora</Typography>
+            )}
+          </Box>
+
+          <li className={styles.li_content}>
+            <Link to="/calendar-page">
+              <button className={`${styles.button_li} ${page === "calendar-page" ? styles.active : ""}`}>
+                <FaRegCalendarAlt className={`${styles.icon_li} $`} />
+                <span>Calendário</span>
+              </button>
+            </Link>
+          </li>
+          <li>
+            <Link to="/process">
+              <button
+                className={`${styles.button_li} ${
+                  page === "process" || page === "process-edit" || page === "register-process" ? styles.active : ""
+                }`}>
+                <FaRegNewspaper className={styles.icon_li} />
+                <span>Processos</span>
+              </button>
+            </Link>
+          </li>
+          <li>
+            <Link to="/user">
+              <button className={styles.button_li}>
+                <FaPeopleGroup className={styles.icon_li} />
+                <span>Gerenciar</span>
+              </button>
+            </Link>
+          </li>
+          <li>
+            <Link to="/reports">
+              <button className={`${styles.button_li} ${page === "reports" ? styles.active : ""}`}>
+                <AssessmentIcon />
+                <span>Relatórios</span>
+              </button>
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </>
   );
 }
 

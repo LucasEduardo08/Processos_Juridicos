@@ -1,19 +1,21 @@
-import React from 'react';
+import React from "react";
 // import { ReactComponent as BackgroundImage } from '../img/azul.svg';
-import styles from './RegisterProcessPage.module.css'; // Alteração para module CSS
-import Form from './RegisterForm';
+import styles from "./RegisterProcessPage.module.css"; // Alteração para module CSS
+import Form from "./RegisterForm";
+import ContainerComponent from "../../components/Container";
+import HeaderPage from "../../components/HeaderPage";
 
 function RegisterProcessPage() {
-    return (
-        <div className={styles.page_content}>
-            <div className={styles.main_container}>
-                <div className={styles.gray_bar}></div>
-                <div className={styles.content}>
-                    <Form />
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <>
+      <HeaderPage>
+        <div className={styles.gray_bar}></div>
+      </HeaderPage>
+      <ContainerComponent className={styles.content}>
+        <Form />
+      </ContainerComponent>
+    </>
+  );
 }
 
 export default RegisterProcessPage;

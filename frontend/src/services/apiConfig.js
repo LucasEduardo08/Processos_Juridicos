@@ -1,6 +1,23 @@
 import axios from "axios";
 
-const baseURL = window.location.hostname === "localhost" ? "http://localhost:3035/api" : "http://192.169.137.112:3035/api";
+const getBaseUrl = () => {
+  const hostname = window.location.hostname;
+
+  // Verifica se é localhost
+  if (hostname === "localhost" || hostname === "127.0.0.1") {
+    return "http://localhost:3035/api";
+  }
+
+  // Verifica se está em uma rede local (ajuste o seu IP de rede aqui)
+  if (hostname.startsWith("192.168.")) {
+    return `http://${hostname}:3035/api`;
+  }
+
+  // Caso contrário, use o IP fixo
+  return "http://192.169.137.112:3035/api";
+};
+
+const baseURL = getBaseUrl();
 const api = axios.create({
   baseURL,
   headers: {

@@ -45,7 +45,7 @@ const ProcessTable = ({
   const handleCLoseModal = () => setModalOpen(false);
 
   return (
-    <TableContainer sx={{ maxHeight: 500 }} className={styles.table_container}>
+    <TableContainer sx={{}} className={styles.table_container}>
       <Table stickyHeader>
         <TableHead>
           <TableRow>

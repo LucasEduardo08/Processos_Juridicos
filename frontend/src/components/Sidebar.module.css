@@ -1,5 +1,6 @@
   .sidebar {
     width: 15vw;
+    /* width: 15rem; */
     height: 100vh;
     color: white;
     display: flex;
@@ -66,24 +67,58 @@
     margin-bottom: 15px;
   }
 
+  .menu_icon {
+    display: none;
+  }
+  
+
 
   @media (max-width: 865px){
     .sidebar{
-      width: 15vw;
+      width: 15rem;
+      transform: translateX(-100%);
       height: 100vh;
       color: white;
-      display: flex;
-      flex-direction: column;
+      background-color: #0092C1;
+      /* display: flex; */
+      position: fixed;
+      z-index: 1000;
       
     }
-    .icon_li{
-      font-size: 100%;
+    
+    .sidebar.open {
+      transform: translateX(0);
     }
-    .button_li{
-      width: 10vw;
+
+    .menu_icon {
+      display: flex;
+      position: fixed;
+      left: 10px;
+      top: 10px;
+      z-index: 1001;
+      color: white;
+      background: #17427c;
+      padding: 8px;
+      border-radius: 4px;
     }
-    .button_li span{
+
+    .button_li {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .button_li span {
       display: none;
     }
 
+    .sidebar_logo,
+    .logo_uea_container {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .sidebar_logo img {
+      width: 120px;
+    }
+    
   }
