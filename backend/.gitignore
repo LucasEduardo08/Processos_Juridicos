@@ -4,4 +4,4 @@ node_modules
 prisma/migrations
 uploads/*
 !uploads/.gitkeep
-.env.prod
+.env.production
